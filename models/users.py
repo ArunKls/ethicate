@@ -1,4 +1,7 @@
-from database import db
+try:
+    from __main__ import db
+except ImportError:
+    from app import db
 
 from models.profiles import Profile
 
