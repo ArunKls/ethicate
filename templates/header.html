@@ -9,7 +9,9 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="#">View My Profile</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('profile.view_my_profile') }}">View My Profile</a></li>
+            {% endif %}
         </ul>
     </nav>
     <div class="search-bar">

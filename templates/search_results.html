@@ -16,7 +16,7 @@
         <p>{{ i.last_name }}</p>
     </div>
     <div class="card-footer">
-        <a href='{{ "/profile?{}".format(i.id) }}' target="_blank">Learn More</a>
+        <a href='{{ "/view_profile?id={}".format(i.id) }}' target="_blank">View Profile</a>
     </div>
 </div>
 {% endfor %}
