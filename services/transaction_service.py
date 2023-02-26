@@ -10,15 +10,8 @@ def send_transaction(
     web3 = getWeb3()
     nonce = web3.eth.getTransactionCount(sender_address)
 
-    d = {
-        "Transaction Type": "Certificate",
-        "Certificate Hash": "THIS IS THE CERTIFICATE HASH",
-        "Certificate Link": "https://chat.openai.com/chat/e283fdaa-d3b7-4dc7-999d-33dc9746306d",
-    }
+    text_data = json.dumps(json.loads(data)).encode("utf-8")
 
-    text_data = json.dumps(d).encode("utf-8")
-
-    print("TEXT DATA", text_data)
     tx = {
         "nonce": nonce,
         "to": recipient_address,
@@ -55,10 +48,8 @@ def get_all_transactions(public_id):
 
     for x in range(ending_blocknumber):
         block = web3.eth.getBlock(x, True)
-        # print("BLOCK", block)
         for transaction in block.transactions:
             if transaction["to"] == public_id:
-                print("TRANSACTION", transaction["hash"])
                 respo.append(
                     {
                         "transaction_hash": transaction["hash"].hex(),
@@ -68,5 +59,19 @@ def get_all_transactions(public_id):
                         ),
                     }
                 )
+
+    pending_tx_filter = web3.eth.filter("pending")
+    pending_tx = pending_tx_filter.get_new_entries()
+
+    for t in pending_tx:
+        transaction = web3.eth.getTransaction(t)
+        if transaction["to"] == public_id:
+            respo.append(
+                {
+                    "transaction_hash": transaction["hash"].hex(),
+                    "from": str(transaction["from"]),
+                    "transaction_details": get_transaction_details(transaction["hash"]),
+                }
+            )
 
     return respo
