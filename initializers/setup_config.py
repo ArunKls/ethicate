@@ -14,3 +14,5 @@ class SetupConfig:
         app.config["MAIL_USE_TLS"] = False
         app.config["MAIL_USE_SSL"] = True
         app.config["SECRET_KEY"] = "kaashyap"
+        app.config["ETHERSCAN_API_KEY"] = "7BZ8DKIK3IRUJHI621458QVTJJVUJJ8J3X"
+        # app.config["WEB3_PROVIDER_URI"] = "http://127.0.0.1:7545"

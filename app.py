@@ -14,16 +14,12 @@ from initializers.setup_config import SetupConfig
 # from initializers.engine import engine
 from sqlalchemy import create_engine
 
-db_uri = "postgresql://avnadmin:AVNS_np5yB2HWuPCvhliJY3j@pg-841b05c-ethicate.aivencloud.com:19321/defaultdb?sslmode=require&sslrootcert=ca.pem"
-
 
 app = Flask(__name__)
 
 with app.app_context():
     SetupConfig(app)
-    # engine = create_engine(db_uri)
     db.init_app(app)
-    # db.engine = engine
 
     migration = Migrate(app, db, directory="migrations", compare_type=True)
 
