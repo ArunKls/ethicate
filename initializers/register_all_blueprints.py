@@ -2,6 +2,7 @@ from api.login import login_blueprint
 from api.signup import signup_blueprint
 from api.home import home_blueprint
 from api.transactions import transactions_blueprint
+from api.search import search_blueprint
 
 
 class RegisterBlueprints:
@@ -10,4 +11,5 @@ class RegisterBlueprints:
         app.register_blueprint(signup_blueprint)
         app.register_blueprint(home_blueprint)
         app.register_blueprint(transactions_blueprint)
+        app.register_blueprint(search_blueprint)
         # pass
