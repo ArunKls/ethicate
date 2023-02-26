@@ -34,7 +34,7 @@ def get_transaction_details(transaction_hash):
 
     bytesStr = codecs.decode("{}".format(text[2:]), "hex_codec")
 
-    resp = bytesStr.decode()
+    resp = eval(bytesStr.decode())
     return {"data": resp}
 
 

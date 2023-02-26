@@ -1,6 +1,73 @@
 {% extends 'header.html' %}
+<html>
 
+<head>
+    <title>Transactions</title>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
 {% block body %}
-<h1>View Profile For "{{ user.first_name + " " + user.last_name }}"</h1>
+
+    <h1>Education</h1>
+    <table>
+        <tr>
+            <th>From</th>
+            <th>School</th>
+            <th>Grade</th>
+            <th>University</th>
+        </tr>
+        {% for cert in certificates %}
+
+        {% if cert["transaction_details"]["data"]["Transaction Type"] == "Education"%}
+        <tr>
+            <td>{{ cert['from'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['School'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['Grade'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['University'] }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+
+    <h1>Experience</h1>
+    <table>
+        <tr>
+            <th>From</th>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Comments</th>
+        </tr>
+        {% for cert in certificates %}
+    
+        {% if cert["transaction_details"]["data"]["Transaction Type"] == "Experience"%}
+        <tr>
+            <td>{{ cert['from'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['company'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['role'] }}</td>
+            <td>{{ cert["transaction_details"]["data"]['comments'] }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+
+
 
 {% endblock %}

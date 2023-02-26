@@ -17,7 +17,15 @@ def view_profile():
 
     user = User.query.get(int(id))
 
+    print("USER ID", user.id)
+    print("PUBLIC KEY", user.public_key)
+
     certificates = get_all_transactions(user.public_key)
+
+    print("CERTIFICATES", certificates)
+
+    for cert in certificates:
+        print(cert["data"])
 
     return render_template("view_profile.html", user=user, certificates=certificates)
 
@@ -26,6 +34,12 @@ def view_profile():
 @login_required
 def view_my_profile():
     user = current_user
+
     certificates = get_all_transactions(user.public_key)
+
+    print("CERTIFICATES", len(certificates))
+
+    for cert in certificates:
+        print("Data", cert["transaction_details"]["data"]["Transaction Type"])
 
     return render_template("view_profile.html", user=user, certificates=certificates)
