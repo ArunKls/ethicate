@@ -14,6 +14,9 @@ from initializers.setup_config import SetupConfig
 # from initializers.engine import engine
 from sqlalchemy import create_engine
 
+from flask_login import LoginManager
+
+from models.users import User
 
 app = Flask(__name__)
 
@@ -25,6 +28,13 @@ with app.app_context():
 
     cors = CORS(app)
     RegisterBlueprints(app, db)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     port = int(os.environ.get("PORT", 8002))
 
