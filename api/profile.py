@@ -17,16 +17,15 @@ def view_profile():
 
     user = User.query.get(int(id))
 
-    certificates = get_all_transactions(user.public_id)
+    certificates = get_all_transactions(user.public_key)
 
-    return render_template("view_profile.html", certificates=certificates)
+    return render_template("view_profile.html", user=user, certificates=certificates)
 
 
 @profile_blueprint.route("/view_my_profile", methods=["GET"])
 @login_required
 def view_my_profile():
     user = current_user
-    print("USER ID", user.id)
-    certificates = get_all_transactions(user.public_id)
+    certificates = get_all_transactions(user.public_key)
 
-    return render_template("view_profile.html", certificates=certificates)
+    return render_template("view_profile.html", user=user, certificates=certificates)
