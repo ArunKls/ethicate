@@ -16,7 +16,6 @@ def search():
     print(query)
     if query:
         response = perform_search(query)
-        print(response)
-        return render_template("home.html")
+        return render_template("search_results.html", results=response)
     else:
         return render_template("home.html")

@@ -36,3 +36,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self) -> str:
         return "{}, {}".format(self.first_name, self.last_name)
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

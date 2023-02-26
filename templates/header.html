@@ -2,24 +2,26 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="static/header.css">
+        {% block head %}
+        {% endblock %}
 </head>
 <header>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
     <div class="search-bar">
-        <form action="#" method="get">
-            <input type="text" name="q" placeholder="Search...">
+        <form action="search" method="get">
+            <input type="text" name="query" placeholder="Search...">
             <button type="submit">Search</button>
         </form>
     </div>
     <div class="user-buttons">
         {% if current_user.is_authenticated %}
-        <a href="{{ url_for('home.home') }}">Profile</a>
+        <a href="{{ url_for('profile.profile') }}">Profile</a>
         <a href="{{ url_for('login.logout') }}">Logout</a>
         {% else %}
         <a href="{{ url_for('login.login') }}">Login</a>
