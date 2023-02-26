@@ -22,7 +22,7 @@ def view_profile():
 
     certificates = get_all_transactions(user.public_key)
 
-    return render_template("view_profile.html", user=user, certificates=certificates)
+    return render_template("view_profile.html", user=user, current_user=current_user, certificates=certificates)
 
 
 @profile_blueprint.route("/view_my_profile", methods=["GET"])
@@ -32,4 +32,4 @@ def view_my_profile():
 
     certificates = get_all_transactions(user.public_key)
 
-    return render_template("view_profile.html", user=user, certificates=certificates)
+    return render_template("view_profile.html", user=user, current_user=current_user, certificates=certificates)

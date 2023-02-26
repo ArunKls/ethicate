@@ -24,6 +24,14 @@
 </head>
 {% block body %}
 
+    {% if current_user and current_user.role == "100" %}
+<form action="/issue_certificate">
+    <input type="hidden" name="user_id" value={{user.id}} />
+    
+    <input type="submit" value="Issue Certificate" />
+</form>
+    {% endif %}
+
     <h1>Education</h1>
     <table>
         <tr>

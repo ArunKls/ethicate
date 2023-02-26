@@ -10,7 +10,7 @@ def send_transaction(
     web3 = getWeb3()
     nonce = web3.eth.getTransactionCount(sender_address)
 
-    text_data = json.dumps(json.loads(data)).encode("utf-8")
+    text_data = json.dumps(data).encode("utf-8")
 
     tx = {
         "nonce": nonce,
