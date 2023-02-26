@@ -40,7 +40,33 @@ def get_transaction_details(transaction_hash):
     text = web3.eth.getTransaction(transaction_hash).input
 
     bytesStr = codecs.decode("{}".format(text[2:]), "hex_codec")
-    print("STR", bytesStr)
 
-    resp = eval(bytesStr.decode())
+    resp = bytesStr.decode()
     return {"data": resp}
+
+
+def get_all_transactions(public_id):
+    web3 = getWeb3()
+    ending_blocknumber = web3.eth.blockNumber
+
+    # print("ENDING BLOCK", ending_blocknumber)
+
+    respo = []
+
+    for x in range(ending_blocknumber):
+        block = web3.eth.getBlock(x, True)
+        # print("BLOCK", block)
+        for transaction in block.transactions:
+            if transaction["to"] == public_id:
+                print("TRANSACTION", transaction["hash"])
+                respo.append(
+                    {
+                        "transaction_hash": transaction["hash"].hex(),
+                        "from": str(transaction["from"]),
+                        "transaction_details": get_transaction_details(
+                            transaction["hash"]
+                        ),
+                    }
+                )
+
+    return respo

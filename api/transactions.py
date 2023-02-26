@@ -1,10 +1,15 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 from flask_login import login_required, current_user
+from constants.web3 import getWeb3
 
 transactions_blueprint = Blueprint(
     "transactions", __name__, template_folder="templates"
 )
-from services.transaction_service import send_transaction, get_transaction_details
+from services.transaction_service import (
+    send_transaction,
+    get_transaction_details,
+    get_all_transactions,
+)
 from flask import jsonify
 
 
@@ -36,3 +41,16 @@ def get_transaction_information():
     data = get_transaction_details(transaction_hash)
 
     return jsonify({"Message": data})
+
+
+@transactions_blueprint.route("/get_public_id_transactions", methods=["GET"])
+def get_public_id_transactions():
+
+    public_id = request.args.get("public_id", None)
+
+    if public_id is None:
+        return []
+
+    tx_list = get_all_transactions(public_id)
+
+    return jsonify({"transaction hashes": tx_list})
