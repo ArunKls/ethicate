@@ -13,5 +13,5 @@ class Profile(db.Model):
 
     profile_information = db.Column(JSON)
 
-    def __init__(self, kwargs):
+    def __init__(self, kwargs={}):
         profile_information = {}
