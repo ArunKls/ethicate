@@ -5,6 +5,8 @@ from werkzeug.security import check_password_hash
 from models.users import User
 from services.search_service import perform_search
 
+from services.transaction_service import get_all_transactions
+
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
@@ -15,9 +17,9 @@ def view_profile():
 
     user = User.query.get(int(id))
 
-    print(user, user.id)
+    certificates = get_all_transactions(user.public_id)
 
-    return render_template("view_profile.html", user=user)
+    return render_template("view_profile.html", certificates=certificates)
 
 
 @profile_blueprint.route("/view_my_profile", methods=["GET"])
@@ -25,4 +27,6 @@ def view_profile():
 def view_my_profile():
     user = current_user
     print("USER ID", user.id)
-    return render_template("view_profile.html", user=user)
+    certificates = get_all_transactions(user.public_id)
+
+    return render_template("view_profile.html", certificates=certificates)
