@@ -10,7 +10,10 @@ signup_blueprint = Blueprint("signup", __name__, template_folder="templates")
 
 @signup_blueprint.route("/signup", methods=["GET", "POST"])
 def signup():
+    print("here1", request.methode)
+
     if request.method == "POST":
+        print("here2")
         data = {
             "first_name": request.form.get("first_name", None),
             "last_name": request.form.get("last_name", None),
@@ -21,6 +24,7 @@ def signup():
         }
 
         profile = Profile()
+        print("test", profile)
         try:
             db.session.add(profile)
             db.session.commit()
