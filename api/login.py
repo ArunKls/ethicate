@@ -24,7 +24,7 @@ def login():
             return redirect(url_for("home.home"))
         else:
             flash("Invalid Password")
-            return
+            return render_template("login.html")
 
     elif request.method == "GET":
         return render_template("login.html")

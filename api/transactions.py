@@ -37,6 +37,9 @@ def get_transaction_information():
     transaction_hash = request.form.get("transaction_hash", None)
 
     if not transaction_hash:
+        transaction_hash = request.args.get("transaction_hash", None)
+
+    if not transaction_hash:
         return jsonify({"message": "Incomplete Data"})
 
     data = get_transaction_details(transaction_hash)
@@ -44,13 +47,15 @@ def get_transaction_information():
     return jsonify({"Message": data})
 
 
-@transactions_blueprint.route("/issue_certificate", methods = ["GET", "POST"])
+@transactions_blueprint.route("/issue_certificate", methods=["GET", "POST"])
 @login_required
-def issue_certificate():    
+def issue_certificate():
     if request.method == "GET":
         issue_user_id = request.args.get("user_id")
         issue_user = User.query.get(issue_user_id)
-        return render_template("issue_certificate.html", current_user=current_user, issue_user=issue_user)
+        return render_template(
+            "issue_certificate.html", current_user=current_user, issue_user=issue_user
+        )
     else:
         sender_address = request.form.get("sender_address", None)
         sender_private_key = request.form.get("sender_private_key", None)
@@ -69,18 +74,15 @@ def issue_certificate():
             data["company"] = request.form.get("company")
             data["comments"] = request.form.get("comments")
 
-
         tx_hash = send_transaction(
-        sender_address, sender_private_key, recipient_address, 0, data
-    )
-        
-        return render_template("home.html")
+            sender_address, sender_private_key, recipient_address, 0, data
+        )
 
+        return render_template("home.html")
 
 
 @transactions_blueprint.route("/get_public_id_transactions", methods=["GET"])
 def get_public_id_transactions():
-
     public_id = request.args.get("public_id", None)
 
     if public_id is None:
