@@ -3,23 +3,19 @@ from flask_login import login_user
 from werkzeug.security import check_password_hash
 
 from models.users import User
+from services.search_service import perform_search
 
 search_blueprint = Blueprint("search", __name__, template_folder="templates")
 
 
-@search_blueprint.route("/search", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
+@search_blueprint.route("/search", methods=["GET"])
+def search():
 
-        print(request.form)
-        name = request.form.get("query", None)
-        # remember = bool(request.form.get("remember", False))
+    query = request.args.get("query", None)
 
-        user = User.query.filter(User.first_name.like(name)).all()
-
-        if not user:
-            print("no user")
-            return redirect(url_for("profile.profile"))
-
-    elif request.method == "GET":
+    print(query)
+    if query:
+        response = perform_search(query)
+        return render_template("search_results.html", results=response)
+    else:
         return render_template("home.html")
